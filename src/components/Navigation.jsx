@@ -88,7 +88,7 @@ const Navigation = () => {
               }
             }}
           >
-            Bunai From Hills
+            Bunai From The Hills
           </div>
           
           {/* Desktop Navigation */}

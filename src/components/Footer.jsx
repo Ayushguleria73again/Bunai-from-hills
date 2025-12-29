@@ -17,7 +17,7 @@ const Footer = () => {
               className="font-serif text-xl md:text-2xl font-semibold mb-4"
               style={{ color: '#e6ddc5' }}
             >
-              Bunai From Hills
+              Bunai From The Hills
             </h3>
             <p 
               className="font-sans text-sm leading-relaxed"
