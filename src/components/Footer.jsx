@@ -92,17 +92,13 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t pt-6 text-center" style={{ borderColor: 'rgba(230, 221, 197, 0.2)' }}>
-          <p 
-            className="font-sans text-xs md:text-sm tracking-wide"
-            style={{ color: '#e6ddc5', opacity: 0.8 }}
-          >
-            © 2024 Bunai From Hills. Handcrafted with{' '}
-            <FontAwesomeIcon icon={faHeart} className="text-red-500" />{' '}
-            in Himachal Pradesh
-          </p>
-        </div>
+        <p className="font-sans text-xs md:text-sm tracking-wide text-center"
+   style={{ color: '#e6ddc5', opacity: 0.85 }}>
+  © 2025 Bunai From Hills — Handwoven stories from the hills, made with{' '}
+  <FontAwesomeIcon icon={faHeart} className="text-red-500 inline-block" />{' '}
+  in Himachal Pradesh.
+</p>
+
       </div>
     </footer>
   )
