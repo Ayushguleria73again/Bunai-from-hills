@@ -19,7 +19,7 @@ const Hero = () => {
       id="home"
       className="w-full min-h-screen flex items-center justify-center px-4 md:px-8 pt-20 md:pt-24 crochet-pattern"
     >
-      <Snowfall color="White" />
+      {/* <Snowfall color="White" /> */}
       <div className="max-w-6xl mx-auto text-center">
         <div className="mb-6 md:mb-8 opacity-0 animate-fade-in-up">
           <img

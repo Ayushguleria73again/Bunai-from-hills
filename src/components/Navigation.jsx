@@ -36,7 +36,15 @@ const Navigation = () => {
     e.preventDefault()
     
     // If we're on checkout page, navigate to home first
-    if (location.pathname !== '/') {
+    if (targetId === '#gallery') {
+      // Navigate to the dedicated gallery page
+      navigate('/gallery')
+      setIsMobileMenuOpen(false)
+    } else if (targetId === '#blog' || targetId === '/blog') {
+      // Navigate to the blog page
+      navigate('/blog')
+      setIsMobileMenuOpen(false)
+    } else if (location.pathname !== '/') {
       navigate('/')
       setTimeout(() => {
         const target = document.querySelector(targetId)

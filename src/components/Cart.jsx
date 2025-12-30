@@ -91,7 +91,21 @@ const Cart = () => {
                   >
                     {/* Product Image/Icon */}
                     <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden" style={{ background: 'rgba(117, 120, 91, 0.1)' }}>
-                      {item.svg || (
+                      {item.imageUrl ? (
+                        <img 
+                          src={`http://localhost:5001${item.imageUrl}`} 
+                          alt={item.title} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : item.image ? (
+                        <img 
+                          src={`http://localhost:5001${item.image}`} 
+                          alt={item.title} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : item.svg ? (
+                        item.svg
+                      ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <FontAwesomeIcon icon={faShoppingBag} className="text-2xl" style={{ color: '#75785b', opacity: 0.5 }} />
                         </div>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faShoppingBag, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useCart } from '../context/CartContext'
+import { useToast } from '../context/ToastContext'
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -13,6 +14,7 @@ const Checkout = () => {
     getCartTotal,
     clearCart
   } = useCart()
+  const { addToast } = useToast()
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -86,20 +88,64 @@ const Checkout = () => {
     }
 
     if (cartItems.length === 0) {
-      alert('Your cart is empty!')
+      addToast('Your cart is empty!', 'error')
       navigate('/')
       return
     }
 
     setIsSubmitting(true)
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
-      alert(`Order placed successfully!\n\nOrder Total: ₹${getCartTotal().toFixed(2)}\n\nThank you for your purchase!`)
-      clearCart()
-      navigate('/')
-    }, 1500)
+    try {
+      // Prepare order data
+      const orderData = {
+        customerInfo: {
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          pincode: formData.pincode,
+        },
+        items: cartItems.map(item => ({
+          productId: item.id,
+          title: item.title,
+          price: item.price,
+          quantity: item.quantity
+        })),
+        totalAmount: total,
+        paymentMethod: formData.paymentMethod
+      };
+
+      // Submit order to backend
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to place order');
+      }
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        addToast(`Order placed successfully! Order ID: ${result.orderId}`, 'success')
+        clearCart();
+        navigate('/');
+      } else {
+        addToast('There was an issue placing your order. Please try again.', 'error');
+      }
+    } catch (error) {
+      console.error('Error submitting order:', error);
+      addToast(`Error: ${error.message || 'Failed to place order. Please try again.'}`, 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const subtotal = getCartTotal()

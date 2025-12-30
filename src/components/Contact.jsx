@@ -5,7 +5,7 @@ import {
   faEnvelope, 
   faShippingFast 
 } from '@fortawesome/free-solid-svg-icons'
-import { submitContactForm } from '../utils/api'
+import { useToast } from '../context/ToastContext'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -13,8 +13,8 @@ const Contact = () => {
     email: '',
     message: ''
   })
-  const [formMessage, setFormMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { addToast } = useToast()
 
   const handleChange = (e) => {
     setFormData({
@@ -26,21 +26,28 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setFormMessage('')
 
     try {
-      const response = await submitContactForm(formData)
-      if (response.success) {
-        setFormMessage(`Thank you, ${formData.name}! We've received your message and will get back to you soon at ${formData.email}.`)
-        setFormData({ name: '', email: '', message: '' })
-        setTimeout(() => setFormMessage(''), 5000)
-      } else {
-        setFormMessage('Something went wrong. Please try again later.')
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to submit contact form');
       }
-    } catch (error) {
-      setFormMessage('Thank you for your message! We\'ll get back to you soon.')
+
+      const result = await response.json()
+      
+      addToast(`Thank you, ${formData.name}! We've received your message and will get back to you soon at ${formData.email}.`, 'success')
       setFormData({ name: '', email: '', message: '' })
-      setTimeout(() => setFormMessage(''), 5000)
+    } catch (error) {
+      addToast(error.message || 'Thank you for your message! We\'ll get back to you soon.', 'error')
+      setFormData({ name: '', email: '', message: '' })
     } finally {
       setIsSubmitting(false)
     }
@@ -165,17 +172,7 @@ const Contact = () => {
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
-              {formMessage && (
-                <div 
-                  className="p-4 rounded-lg font-sans text-sm"
-                  style={{ 
-                    background: 'rgba(117, 120, 91, 0.2)', 
-                    color: '#75785b' 
-                  }}
-                >
-                  {formMessage}
-                </div>
-              )}
+
             </form>
           </div>
 
