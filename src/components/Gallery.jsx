@@ -111,7 +111,7 @@ const Gallery = () => {
             >
               <div className="w-full h-full flex items-center justify-center p-2">
                 <img
-                  src={`${API_BASE_URL}${item.imageUrl}`}
+                  src={`https://bunai-from-hills-backend.vercel.app${item.imageUrl}`}
                   alt={item.title || 'Gallery item'}
                   className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-300"
                 />
