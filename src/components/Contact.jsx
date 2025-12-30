@@ -30,7 +30,7 @@ const Contact = () => {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/contact`, {
+      const response = await fetch(`https://bunai-from-hills-backend.vercel.app/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

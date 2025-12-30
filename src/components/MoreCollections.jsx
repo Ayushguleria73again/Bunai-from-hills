@@ -41,7 +41,7 @@ const MoreCollections = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/products`);
+        const response = await fetch(`https://bunai-from-hills-backend.vercel.app/api/products`);
 
         if (!response.ok) {
           throw new Error('Failed to fetch products');

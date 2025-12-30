@@ -146,7 +146,7 @@ const Gallery = () => {
               </button>
               
               <img
-                src={`http://localhost:5001${selectedImage.imageUrl}`}
+                src={`https://bunai-from-hills-backend.vercel.app${selectedImage.imageUrl}`}
                 alt={selectedImage.title || 'Gallery item'}
                 className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
               />
