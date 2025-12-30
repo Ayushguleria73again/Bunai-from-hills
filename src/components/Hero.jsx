@@ -38,6 +38,7 @@ const Hero = () => {
           className="font-sans text-lg md:text-xl mb-3 md:mb-4 opacity-0 animate-fade-in-up delay-400"
           style={{ color: "#75785b" }}
         >
+        
           Handcrafted Crochet from Himachal Pradesh
         </p>
         <p
