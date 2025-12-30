@@ -13,7 +13,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/gallery`);
+        const response = await fetch(`https://bunai-from-hills-backend.vercel.app/api/gallery`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch gallery');
