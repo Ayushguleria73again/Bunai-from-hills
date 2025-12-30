@@ -30,7 +30,7 @@ const BlogPost = () => {
           date: postData.date,
           category: postData.category,
           readTime: postData.readTime,
-          image: postData.imageUrl ? `http://localhost:5001${postData.imageUrl}` : null,
+          image: postData.imageUrl ? `${import.meta.env.VITE_API_BASE_URL1}${postData.imageUrl}` : null,
           tags: postData.tags || []
         };
         
@@ -52,7 +52,7 @@ const BlogPost = () => {
             title: post.title,
             excerpt: post.excerpt,
             date: post.date,
-            image: post.imageUrl ? `http://localhost:5001${post.imageUrl}` : null
+            image: post.imageUrl ? `${import.meta.env.VITE_API_BASE_URL1}${post.imageUrl}` : null
           }));
           
         setRelatedPosts(related);

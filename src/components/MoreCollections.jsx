@@ -53,7 +53,7 @@ const MoreCollections = () => {
           id: product._id,
           imageElement: product.imageUrl ? (
             <img
-              src={`http://localhost:5001${product.imageUrl}`}
+              src={`${import.meta.env.VITE_API_BASE_URL1}${product.imageUrl}`}
               alt={product.title}
               className="w-full h-full object-cover"
               style={{ maxHeight: '200px' }}

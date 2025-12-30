@@ -39,7 +39,7 @@ const Blog = () => {
           date: post.date,
           category: post.category,
           readTime: post.readTime,
-          image: post.imageUrl ? `http://localhost:5001${post.imageUrl}` : null,
+          image: post.imageUrl ? `${import.meta.env.VITE_API_BASE_URL1}${post.imageUrl}` : null,
           tags: post.tags || []
         }));
         

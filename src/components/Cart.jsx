@@ -93,13 +93,13 @@ const Cart = () => {
                     <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden" style={{ background: 'rgba(117, 120, 91, 0.1)' }}>
                       {item.imageUrl ? (
                         <img 
-                          src={`http://localhost:5001${item.imageUrl}`} 
+                          src={`${import.meta.env.VITE_API_BASE_URL1}${item.imageUrl}`} 
                           alt={item.title} 
                           className="w-full h-full object-cover"
                         />
                       ) : item.image ? (
                         <img 
-                          src={`http://localhost:5001${item.image}`} 
+                          src={`${import.meta.env.VITE_API_BASE_URL1}${item.image}`} 
                           alt={item.title} 
                           className="w-full h-full object-cover"
                         />
