@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Gallery = () => {
   const [galleryItems, setGalleryItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +13,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/gallery`);
+        const response = await fetch(`${API_BASE_URL}/gallery`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch gallery');
@@ -110,7 +111,7 @@ const Gallery = () => {
             >
               <div className="w-full h-full flex items-center justify-center p-2">
                 <img
-                  src={`${import.meta.env.VITE_API_BASE_URL1}${item.imageUrl}`}
+                  src={`${API_BASE_URL}${item.imageUrl}`}
                   alt={item.title || 'Gallery item'}
                   className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-300"
                 />

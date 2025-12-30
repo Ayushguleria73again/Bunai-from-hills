@@ -7,6 +7,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useToast } from '../context/ToastContext'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -28,7 +30,7 @@ const Contact = () => {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/contact`, {
+      const response = await fetch(`${API_BASE_URL}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

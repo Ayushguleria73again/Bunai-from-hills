@@ -5,6 +5,8 @@ import { useCart } from '../context/CartContext';
 import { useSearchParams } from 'react-router-dom';
 import { useToast } from '../context/ToastContext';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const MoreCollections = () => {
   const { addToCart } = useCart();
   const { addToast } = useToast();
@@ -39,7 +41,7 @@ const MoreCollections = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products`);
+        const response = await fetch(`${API_BASE_URL}/api/products`);
 
         if (!response.ok) {
           throw new Error('Failed to fetch products');
@@ -53,7 +55,7 @@ const MoreCollections = () => {
           id: product._id,
           imageElement: product.imageUrl ? (
             <img
-              src={`${import.meta.env.VITE_API_BASE_URL1}${product.imageUrl}`}
+              src={`${API_BASE_URL}${product.imageUrl}`}
               alt={product.title}
               className="w-full h-full object-cover"
               style={{ maxHeight: '200px' }}
