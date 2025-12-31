@@ -23,7 +23,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/blog`);
+        const response = await fetch(`https://bunai-from-hills-backend.vercel.app/api/blog`);
         if (!response.ok) {
           throw new Error('Failed to fetch blog posts');
         }
@@ -39,7 +39,7 @@ const Blog = () => {
           date: post.date,
           category: post.category,
           readTime: post.readTime,
-          image: post.imageUrl ? `${import.meta.env.VITE_API_BASE_URL1}${post.imageUrl}` : null,
+          image: post.imageUrl ? `${post.imageUrl}` : null,
           tags: post.tags || []
         }));
         
