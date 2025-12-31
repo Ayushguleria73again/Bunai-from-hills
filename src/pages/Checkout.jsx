@@ -118,7 +118,7 @@ const Checkout = () => {
       };
 
       // Submit order to backend
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders`, {
+      const response = await fetch(`https://bunai-from-hills-backend.vercel.app/api/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
