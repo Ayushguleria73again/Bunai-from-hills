@@ -1,158 +1,178 @@
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faTimes,
+  faChevronLeft,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Gallery = () => {
-  const [galleryItems, setGalleryItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [galleryItems, setGalleryItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const response = await fetch(`https://bunai-from-hills-backend.vercel.app/api/gallery`);
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch gallery');
-        }
-        
-        const data = await response.json();
-        setGalleryItems(data);
+        const response = await fetch(
+          'https://bunai-from-hills-backend.vercel.app/api/gallery'
+        )
+        if (!response.ok) throw new Error('Failed to fetch gallery')
+        const data = await response.json()
+        setGalleryItems(data)
       } catch (err) {
-        setError('Unable to load gallery');
-        console.error(err);
+        setError('Unable to load gallery')
+        console.error(err)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-
-    fetchGallery();
-  }, []);
+    }
+    fetchGallery()
+  }, [])
 
   const openLightbox = (index) => {
-    setCurrentImageIndex(index);
-    setSelectedImage(galleryItems[index]);
-  };
-
-  const closeLightbox = () => {
-    setSelectedImage(null);
-  };
-
-  const goToPrevious = () => {
-    const previousIndex = currentImageIndex === 0 
-      ? galleryItems.length - 1 
-      : currentImageIndex - 1;
-    setCurrentImageIndex(previousIndex);
-    setSelectedImage(galleryItems[previousIndex]);
-  };
-
-  const goToNext = () => {
-    const nextIndex = currentImageIndex === galleryItems.length - 1 
-      ? 0 
-      : currentImageIndex + 1;
-    setCurrentImageIndex(nextIndex);
-    setSelectedImage(galleryItems[nextIndex]);
-  };
-
-  // Loading state
-  if (loading) {
-    return (
-      <section className="w-full py-24 text-center" style={{ background: '#e6ddc5' }}>
-        <p className="text-2xl" style={{ color: '#75785b' }}>
-          Loading gallery...
-        </p>
-      </section>
-    );
+    setCurrentImageIndex(index)
+    setSelectedImage(galleryItems[index])
   }
 
-  // Error state
+  const closeLightbox = () => setSelectedImage(null)
+
+  const goToPrevious = () => {
+    const index =
+      currentImageIndex === 0
+        ? galleryItems.length - 1
+        : currentImageIndex - 1
+    setCurrentImageIndex(index)
+    setSelectedImage(galleryItems[index])
+  }
+
+  const goToNext = () => {
+    const index =
+      currentImageIndex === galleryItems.length - 1
+        ? 0
+        : currentImageIndex + 1
+    setCurrentImageIndex(index)
+    setSelectedImage(galleryItems[index])
+  }
+
+  /* ------------------ STATES ------------------ */
+
+  if (loading) {
+    return (
+      <section
+        className="w-full py-28 text-center"
+        style={{ background: '#e6ddc5' }}
+      >
+        <p className="text-2xl tracking-wide" style={{ color: '#75785b' }}>
+          Loading gallery…
+        </p>
+      </section>
+    )
+  }
+
   if (error) {
     return (
-      <section className="w-full py-24 text-center" style={{ background: '#e6ddc5' }}>
+      <section
+        className="w-full py-28 text-center"
+        style={{ background: '#e6ddc5' }}
+      >
         <p className="text-xl text-red-600">{error}</p>
       </section>
-    );
+    )
   }
 
   return (
     <section
       id="gallery"
-      className="w-full py-16 md:py-24 px-4 md:px-8"
+      className="w-full py-20 md:py-28 px-4 md:px-10"
       style={{ background: '#e6ddc5' }}
     >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-16">
           <h2
-            className="font-serif text-4xl md:text-5xl mb-4"
+            className="font-serif text-4xl md:text-5xl mb-5"
             style={{ color: '#75785b' }}
           >
             Gallery
           </h2>
           <p
-            className="max-w-2xl mx-auto text-base md:text-lg"
-            style={{ color: '#75785b', opacity: 0.8 }}
+            className="max-w-2xl mx-auto text-base md:text-lg leading-relaxed"
+            style={{ color: '#75785b', opacity: 0.85 }}
           >
-            Explore our collection of beautiful handcrafted products
+            A glimpse into our handcrafted world — warmth, texture, and timeless
+            craft.
           </p>
         </div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-7">
           {galleryItems.map((item, index) => (
             <div
               key={item._id || index}
-              className="group rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer aspect-square"
               onClick={() => openLightbox(index)}
-              style={{ background: 'rgba(232, 189, 125, 0.2)' }}
+              className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer
+                         backdrop-blur-md shadow-md hover:shadow-2xl
+                         transition-all duration-500 hover:-translate-y-1"
+              style={{
+                background: 'rgba(232, 189, 125, 0.25)'
+              }}
             >
-              <div className="w-full h-full flex items-center justify-center p-2">
-                <img
-                  src={`${item.imageUrl}`}
-                  alt={item.title || 'Gallery item'}
-                  className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
+              <img
+                src={item.imageUrl}
+                alt={item.title || 'Gallery item'}
+                className="w-full h-full object-cover transition-transform duration-700
+                           group-hover:scale-110"
+              />
+
+              {/* Soft overlay */}
+              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
             </div>
           ))}
         </div>
 
-        {/* Lightbox Modal */}
+        {/* Lightbox */}
         {selectedImage && (
-          <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-            <div className="relative max-w-4xl max-h-full w-full">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+            <div className="relative w-full max-w-5xl">
+              {/* Close */}
               <button
                 onClick={closeLightbox}
-                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition-all"
+                className="absolute -top-12 right-2 text-white/80 hover:text-white transition"
               >
-                <FontAwesomeIcon icon={faTimes} className="text-xl" />
+                <FontAwesomeIcon icon={faTimes} size="lg" />
               </button>
-              
+
+              {/* Prev */}
               <button
                 onClick={goToPrevious}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-3 rounded-full bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition-all"
+                className="absolute left-3 top-1/2 -translate-y-1/2
+                           p-3 rounded-full bg-white/20 hover:bg-white/30
+                           text-white transition"
               >
-                <FontAwesomeIcon icon={faChevronLeft} className="text-xl" />
+                <FontAwesomeIcon icon={faChevronLeft} />
               </button>
-              
+
+              {/* Next */}
               <button
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-3 rounded-full bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition-all"
+                className="absolute right-3 top-1/2 -translate-y-1/2
+                           p-3 rounded-full bg-white/20 hover:bg-white/30
+                           text-white transition"
               >
-                <FontAwesomeIcon icon={faChevronRight} className="text-xl" />
+                <FontAwesomeIcon icon={faChevronRight} />
               </button>
-              
+
               <img
-                src={`${selectedImage.imageUrl}`}
+                src={selectedImage.imageUrl}
                 alt={selectedImage.title || 'Gallery item'}
-                className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+                className="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
               />
-              
+
               {selectedImage.title && (
-                <p className="text-white text-center mt-4 text-lg">
+                <p className="text-center text-white mt-4 text-lg tracking-wide">
                   {selectedImage.title}
                 </p>
               )}
@@ -161,7 +181,7 @@ const Gallery = () => {
         )}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Gallery;
+export default Gallery
