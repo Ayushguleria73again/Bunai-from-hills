@@ -13,6 +13,7 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [direction, setDirection] = useState(null);
 
   useEffect(() => {
     const fetchGallery = async () => {
@@ -45,17 +46,35 @@ const Gallery = () => {
   };
 
   const goToPrevious = () => {
-    const index =
-      currentImageIndex === 0 ? galleryItems.length - 1 : currentImageIndex - 1;
-    setCurrentImageIndex(index);
-    setSelectedImage(galleryItems[index]);
+    setDirection("prev");
+    setIsAnimating(false);
+
+    setTimeout(() => {
+      const index =
+        currentImageIndex === 0
+          ? galleryItems.length - 1
+          : currentImageIndex - 1;
+
+      setCurrentImageIndex(index);
+      setSelectedImage(galleryItems[index]);
+      setIsAnimating(true);
+    }, 200);
   };
 
   const goToNext = () => {
-    const index =
-      currentImageIndex === galleryItems.length - 1 ? 0 : currentImageIndex + 1;
-    setCurrentImageIndex(index);
-    setSelectedImage(galleryItems[index]);
+    setDirection("next");
+    setIsAnimating(false);
+
+    setTimeout(() => {
+      const index =
+        currentImageIndex === galleryItems.length - 1
+          ? 0
+          : currentImageIndex + 1;
+
+      setCurrentImageIndex(index);
+      setSelectedImage(galleryItems[index]);
+      setIsAnimating(true);
+    }, 200);
   };
 
   /* ------------------ STATES ------------------ */
@@ -136,10 +155,16 @@ const Gallery = () => {
 
         {selectedImage && (
           <div
-            className={`fixed inset-0 z-50 flex items-center justify-center p-4
-    transition-opacity duration-300 ease-out
-    ${isAnimating ? "opacity-100" : "opacity-0"}
-    bg-black/80 backdrop-blur-md`}
+            className={`relative w-full max-w-5xl transform transition-all duration-300 ease-out
+  ${
+    isAnimating
+      ? "opacity-100 translate-x-0"
+      : direction === "next"
+      ? "-translate-x-6 opacity-0"
+      : direction === "prev"
+      ? "translate-x-6 opacity-0"
+      : "opacity-0"
+  }`}
           >
             <div
               className={`relative w-full max-w-5xl transform transition-all
