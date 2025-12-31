@@ -158,59 +158,53 @@ const Gallery = () => {
             className={`relative w-full max-w-5xl transform transition-all duration-300 ease-out
   ${
     isAnimating
-      ? "opacity-100 translate-x-0"
+      ? "opacity-100 translate-x-0 scale-100"
       : direction === "next"
-      ? "-translate-x-6 opacity-0"
+      ? "-translate-x-8 opacity-0 scale-95"
       : direction === "prev"
-      ? "translate-x-6 opacity-0"
-      : "opacity-0"
+      ? "translate-x-8 opacity-0 scale-95"
+      : "opacity-0 scale-95"
   }`}
           >
-            <div
-              className={`relative w-full max-w-5xl transform transition-all
-      duration-300 ease-out
-      ${isAnimating ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
+            {/* Close */}
+            <button
+              onClick={closeLightbox}
+              className="absolute -top-12 right-2 text-white/80 hover:text-white transition"
             >
-              {/* Close */}
-              <button
-                onClick={closeLightbox}
-                className="absolute -top-12 right-2 text-white/80 hover:text-white transition"
-              >
-                ✕
-              </button>
+              ✕
+            </button>
 
-              {/* Prev */}
-              <button
-                onClick={goToPrevious}
-                className="absolute left-3 top-1/2 -translate-y-1/2
-        p-3 rounded-full bg-white/20 hover:bg-white/30
-        text-white transition"
-              >
-                ‹
-              </button>
+            {/* Prev */}
+            <button
+              onClick={goToPrevious}
+              className="absolute left-3 top-1/2 -translate-y-1/2
+    p-3 rounded-full bg-white/20 hover:bg-white/30
+    text-white transition"
+            >
+              ‹
+            </button>
 
-              {/* Next */}
-              <button
-                onClick={goToNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2
-        p-3 rounded-full bg-white/20 hover:bg-white/30
-        text-white transition"
-              >
-                ›
-              </button>
+            {/* Next */}
+            <button
+              onClick={goToNext}
+              className="absolute right-3 top-1/2 -translate-y-1/2
+    p-3 rounded-full bg-white/20 hover:bg-white/30
+    text-white transition"
+            >
+              ›
+            </button>
 
-              <img
-                src={selectedImage.imageUrl}
-                alt={selectedImage.title || "Gallery image"}
-                className="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
-              />
+            <img
+              src={selectedImage.imageUrl}
+              alt={selectedImage.title || "Gallery image"}
+              className="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
+            />
 
-              {selectedImage.title && (
-                <p className="text-center text-white mt-4 text-lg tracking-wide">
-                  {selectedImage.title}
-                </p>
-              )}
-            </div>
+            {selectedImage.title && (
+              <p className="text-center text-white mt-4 text-lg tracking-wide">
+                {selectedImage.title}
+              </p>
+            )}
           </div>
         )}
       </div>
