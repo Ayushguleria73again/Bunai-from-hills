@@ -28,7 +28,6 @@ const Home = () => (
     <Snowfall color="White" />
     <Hero />
     <About />
-    <Gallery />
     <Collection />
     <Contact />
   </>
