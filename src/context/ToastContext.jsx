@@ -1,6 +1,11 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faExclamationTriangle, faInfoCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheckCircle,
+  faExclamationTriangle,
+  faInfoCircle,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
 
 const ToastContext = createContext();
 
@@ -17,15 +22,10 @@ export const ToastProvider = ({ children }) => {
 
   const addToast = (message, type = 'info') => {
     const id = Date.now() + Math.random();
-    const newToast = {
-      id,
-      message,
-      type,
-    };
-    
+    const newToast = { id, message, type };
+
     setToasts(prev => [...prev, newToast]);
-    
-    // Auto remove toast after 5 seconds
+
     setTimeout(() => {
       removeToast(id);
     }, 2000);
@@ -38,7 +38,9 @@ export const ToastProvider = ({ children }) => {
   return (
     <ToastContext.Provider value={{ addToast }}>
       {children}
-      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 space-y-2">
+
+      {/* ✅ Responsive container */}
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 space-y-2 w-full px-3 sm:px-0 flex flex-col items-center">
         {toasts.map((toast) => (
           <ToastItem
             key={toast.id}
@@ -56,25 +58,25 @@ const ToastItem = ({ toast, onClose }) => {
     switch (toast.type) {
       case 'success':
         return {
-          background: 'rgba(230, 221, 197, 0.95)', // #e6ddc5 with opacity
+          background: 'rgba(230, 221, 197, 0.95)',
           border: '2px solid #75785b',
           color: '#75785b',
         };
       case 'error':
         return {
-          background: 'rgba(230, 221, 197, 0.95)', // #e6ddc5 with opacity
+          background: 'rgba(230, 221, 197, 0.95)',
           border: '2px solid #e74c3c',
           color: '#e74c3c',
         };
       case 'warning':
         return {
-          background: 'rgba(230, 221, 197, 0.95)', // #e6ddc5 with opacity
+          background: 'rgba(230, 221, 197, 0.95)',
           border: '2px solid #f39c12',
           color: '#f39c12',
         };
       default:
         return {
-          background: 'rgba(230, 221, 197, 0.95)', // #e6ddc5 with opacity
+          background: 'rgba(230, 221, 197, 0.95)',
           border: '2px solid #75785b',
           color: '#75785b',
         };
@@ -84,30 +86,39 @@ const ToastItem = ({ toast, onClose }) => {
   const getIcon = () => {
     switch (toast.type) {
       case 'success':
-        return <FontAwesomeIcon icon={faCheckCircle} className="text-xl" />;
+        return <FontAwesomeIcon icon={faCheckCircle} />;
       case 'error':
-        return <FontAwesomeIcon icon={faExclamationTriangle} className="text-xl" />;
       case 'warning':
-        return <FontAwesomeIcon icon={faExclamationTriangle} className="text-xl" />;
+        return <FontAwesomeIcon icon={faExclamationTriangle} />;
       default:
-        return <FontAwesomeIcon icon={faInfoCircle} className="text-xl" />;
+        return <FontAwesomeIcon icon={faInfoCircle} />;
     }
   };
 
   return (
     <div
-      className="flex items-center p-4 rounded-lg shadow-lg max-w-sm animate-fade-in-up"
+      className="
+        flex items-start sm:items-center
+        gap-3
+        p-3 sm:p-4
+        rounded-lg shadow-lg
+        w-full sm:max-w-sm
+        text-sm
+        animate-fade-in-up
+      "
       style={getToastStyle()}
     >
-      <div className="mr-3 text-xl">
+      <div className="text-lg sm:text-xl mt-0.5 sm:mt-0">
         {getIcon()}
       </div>
-      <div className="flex-1 font-sans text-sm">
+
+      <div className="flex-1 break-words leading-relaxed">
         {toast.message}
       </div>
+
       <button
         onClick={onClose}
-        className="ml-3 p-1 rounded-full hover:opacity-70 transition-opacity"
+        className="p-1 rounded-full hover:opacity-70 transition-opacity"
         style={{ color: '#75785b' }}
       >
         <FontAwesomeIcon icon={faTimes} />
