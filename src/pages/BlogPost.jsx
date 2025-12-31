@@ -14,7 +14,7 @@ const BlogPost = () => {
     const fetchPost = async () => {
       try {
         // Fetch the specific post
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/blog/${id}`);
+        const response = await fetch(`https://bunai-from-hills-backend.vercel.app/api/blog/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch blog post');
         }
@@ -30,14 +30,14 @@ const BlogPost = () => {
           date: postData.date,
           category: postData.category,
           readTime: postData.readTime,
-          image: postData.imageUrl ? `${import.meta.env.VITE_API_BASE_URL1}${postData.imageUrl}` : null,
+          image: postData.imageUrl ? `${postData.imageUrl}` : null,
           tags: postData.tags || []
         };
         
         setPost(transformedPost);
         
         // Fetch related posts (posts with same category)
-        const relatedResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/blog`);
+        const relatedResponse = await fetch(`https://bunai-from-hills-backend.vercel.app/api/blog`);
         if (!relatedResponse.ok) {
           throw new Error('Failed to fetch related posts');
         }
@@ -52,7 +52,7 @@ const BlogPost = () => {
             title: post.title,
             excerpt: post.excerpt,
             date: post.date,
-            image: post.imageUrl ? `${import.meta.env.VITE_API_BASE_URL1}${post.imageUrl}` : null
+            image: post.imageUrl ? `${post.imageUrl}` : null
           }));
           
         setRelatedPosts(related);
