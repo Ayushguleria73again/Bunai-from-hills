@@ -55,7 +55,7 @@ const MoreCollections = () => {
           id: product._id,
           imageElement: product.imageUrl ? (
             <img
-              src={`https://bunai-from-hills-backend.vercel.app${product.imageUrl}`}
+              src={`${product.imageUrl}`}
               alt={product.title}
               className="w-full h-full object-cover"
               style={{ maxHeight: '200px' }}

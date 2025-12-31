@@ -93,13 +93,13 @@ const Cart = () => {
                     <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden" style={{ background: 'rgba(117, 120, 91, 0.1)' }}>
                       {item.imageUrl ? (
                         <img 
-                          src={`https://bunai-from-hills-backend.vercel.app${item.imageUrl}`} 
+                          src={`${item.imageUrl}`} 
                           alt={item.title} 
                           className="w-full h-full object-cover"
                         />
                       ) : item.image ? (
                         <img 
-                          src={`https://bunai-from-hills-backend.vercel.app${item.image}`} 
+                          src={`${item.image}`} 
                           alt={item.title} 
                           className="w-full h-full object-cover"
                         />

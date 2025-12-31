@@ -111,7 +111,7 @@ const Gallery = () => {
             >
               <div className="w-full h-full flex items-center justify-center p-2">
                 <img
-                  src={`https://bunai-from-hills-backend.vercel.app${item.imageUrl}`}
+                  src={`${item.imageUrl}`}
                   alt={item.title || 'Gallery item'}
                   className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-300"
                 />
@@ -146,7 +146,7 @@ const Gallery = () => {
               </button>
               
               <img
-                src={`https://bunai-from-hills-backend.vercel.app${selectedImage.imageUrl}`}
+                src={`${selectedImage.imageUrl}`}
                 alt={selectedImage.title || 'Gallery item'}
                 className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
               />
